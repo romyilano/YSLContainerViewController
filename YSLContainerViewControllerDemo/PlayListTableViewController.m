@@ -66,13 +66,29 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    DetailViewController *detailVC = [[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];
-    [self.navigationController pushViewController:detailVC animated:YES];
+    // test demonstration of delgate
+    if (indexPath.row == 0) {
+        [self testMethod];
+    } else
+    {
+        DetailViewController *detailVC = [[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
+}
+
+#pragma mark - Test
+
+// demonstration of the delegate - tapping the first cell will move to the 3dr childview controller
+- (void)testMethod {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(childViewController:didChooseIndexValue:)]) {
+        id <YSLChildViewControllerDelegate> strongDelegate = self.delegate;
+        [strongDelegate childViewController:self didChooseIndexValue:3];
+    }
 }
 
 @end

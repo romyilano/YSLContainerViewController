@@ -192,4 +192,13 @@ static const CGFloat kYSLScrollMenuViewHeight = 40;
     [self setChildViewControllerWithCurrentIndex:self.currentIndex];
 }
 
+#pragma mark - YSLChildViewControllerDelegate 
+
+- (void)childViewController:(UIViewController *)childViewController
+        didChooseIndexValue:(NSInteger)value {
+    if (value < self.childControllers.count && value != self.currentIndex) {
+        [self scrollMenuViewSelectedIndex:value];
+    }
+}
+
 @end
